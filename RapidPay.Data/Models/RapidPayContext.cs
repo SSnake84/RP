@@ -57,11 +57,7 @@ namespace RapidPay.Data.Models
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
+                entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(50);
 

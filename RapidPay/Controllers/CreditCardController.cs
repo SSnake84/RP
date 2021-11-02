@@ -50,9 +50,10 @@ namespace RapidPay.Controllers
                 decimal balance = await _creditCardService.GetCreditCardBalanceAsync(cardNumber);
                 return Ok(balance);
             }
+            catch (ManagedException ex) { return BadRequest(ex.Message); }
             catch 
             {
-                return BadRequest(Messages.WRONG_CARD_NUMBER);
+                return BadRequest(Messages.WRONG_CARD_NUMBER); 
             }
         }
 
@@ -69,9 +70,10 @@ namespace RapidPay.Controllers
                 else
                     return BadRequest(Messages.CREDIT_CARD_NUMBER_ALREADY_EXISTS);
             }
-            catch
-            {
-                return BadRequest(Messages.WRONG_DATA);
+            catch (ManagedException ex) { return BadRequest(ex.Message); }
+            catch 
+            { 
+                return BadRequest(Messages.WRONG_DATA); 
             }
         }
 
@@ -89,9 +91,10 @@ namespace RapidPay.Controllers
                     return Ok();
                 return StatusCode(500, Messages.PAYMENT_FAILED);
             }
+            catch (ManagedException ex) { return StatusCode(500, ex.Message); }
             catch
             {
-                return StatusCode(500, Messages.PAYMENT_FAILED);
+                return StatusCode(500, Messages.PAYMENT_FAILED); 
             }
         }
     }

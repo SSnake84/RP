@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
-
-namespace RapidPay.Data.Models
+﻿namespace RapidPay.Data.Models
 {
     public partial class CreditCard
     {

@@ -45,6 +45,9 @@ namespace RapidPay.Data.Models
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Balance)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<User>(entity =>

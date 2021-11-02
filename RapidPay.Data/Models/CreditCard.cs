@@ -12,6 +12,7 @@ namespace RapidPay.Data.Models
         public int UserId { get; set; }
         public short ExpirationMonth { get; set; }
         public short ExpirationYear { get; set; }
-        public short VerficationCode { get; set; }
+        public short VerificationCode { get; set; }
+        public decimal Balance { get; set; }
     }
 }

@@ -16,16 +16,24 @@ namespace RapidPay.Services
     public class CreditCardService : ICreditCardService
     {
         ICreditCardsRepo _CreditCardRepo = null;
+        IUniversalFeesExchangeService _UFEService = null;
 
         #region Constructors
         public CreditCardService()
         {
             _CreditCardRepo = new CreditCardsRepo();
+            _UFEService = UniversalFeesExchangeService.GetInstance();
         }
 
         public CreditCardService(ICreditCardsRepo ccRepo)
         {
             _CreditCardRepo = ccRepo;
+            _UFEService = UniversalFeesExchangeService.GetInstance();
+        }
+        public CreditCardService(ICreditCardsRepo ccRepo, IUniversalFeesExchangeService ufeService)
+        {
+            _CreditCardRepo = ccRepo;
+            _UFEService = ufeService;
         }
         #endregion Constructors
 
@@ -71,7 +79,8 @@ namespace RapidPay.Services
                 throw new ManagedException(Messages.WRONG_AMOUNT);
 
             var balance = await GetCreditCardBalanceAsync(cardNumber);
-            balance += amount;
+            balance += amount + await _UFEService.GetFeeAsync();
+
             await _CreditCardRepo.UpdateBalanceAsync(cardNumber, balance);
             return balance;
         }

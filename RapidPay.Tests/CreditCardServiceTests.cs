@@ -124,17 +124,22 @@ namespace RapidPay.Tests
             catch { Assert.True(false); }
         }
         [Fact]
-        public async void PayAsync_100_ShouldReturnTrue()
+        public async void PayAsync_100_ShouldReturn100()
         {
             var cardnumber = "123456789012345";
-            var amount = 100;
+            var amount = 200;
+            var fee = 2;
+            var expected = 202;
 
             var repo = new Mock<ICreditCardsRepo>();
-            repo.Setup(m => m.DoesExistCreditCardAsync(cardnumber)).ReturnsAsync(true);
-            repo.Setup(m => m.UpdateBalanceAsync(cardnumber, amount)).ReturnsAsync(true);
-            ICreditCardService svc = new Services.CreditCardService(repo.Object);
+            var ufe = new Mock<IUniversalFeesExchangeService>();
+            repo.Setup(r => r.DoesExistCreditCardAsync(cardnumber)).ReturnsAsync(true);
+            repo.Setup(r => r.UpdateBalanceAsync(cardnumber, amount)).ReturnsAsync(true);
+            ufe.Setup(u => u.GetFeeAsync()).ReturnsAsync(fee);
+
+            ICreditCardService svc = new Services.CreditCardService(repo.Object, ufe.Object);
             var actual = await svc.PayAsync(cardnumber, amount);
-            Assert.Equal(100, actual);
+            Assert.Equal(actual, expected);
         }
         #endregion GetCreditCardBalance
     }

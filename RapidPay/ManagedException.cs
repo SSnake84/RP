@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace RapidPay
 {
     [Serializable]
-    internal class ManagedException : Exception
+    public class ManagedException : Exception
     {
         public ManagedException()
         {

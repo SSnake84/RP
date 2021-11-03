@@ -9,7 +9,7 @@ namespace RapidPay.Services
     {
         Task<bool> AddCreditCardAsync(CreditCard card);
         Task<decimal> GetCreditCardBalanceAsync(string cardNumber);
-        Task<bool> PayAsync(string cardNumber, decimal amount);
+        Task<decimal> PayAsync(string cardNumber, decimal amount);
         bool IsValidCardNumber(string cardNumber);
     }
 
@@ -36,7 +36,7 @@ namespace RapidPay.Services
 
         public async Task<decimal> GetCreditCardBalanceAsync(string cardNumber)
         {
-            if (!IsValidCardNumber(cardNumber) || !(await _CreditCardRepo.DoesExistCreditCardAsync(cardNumber)))
+            if (!IsValidCardNumber(cardNumber) || !await _CreditCardRepo.DoesExistCreditCardAsync(cardNumber))
                 throw new ManagedException(Messages.WRONG_CARD_NUMBER);
 
             return await _CreditCardRepo.GetCreditCardBalanceAsync(cardNumber);
@@ -65,12 +65,15 @@ namespace RapidPay.Services
             return await _CreditCardRepo.AddCreditCardAsync(card);
         }
 
-        public async Task<bool> PayAsync(string cardNumber, decimal amount)
+        public async Task<decimal> PayAsync(string cardNumber, decimal amount)
         {
-            if (!(await _CreditCardRepo.DoesExistCreditCardAsync(cardNumber)))
-                throw new ManagedException(Messages.WRONG_CARD_NUMBER);
+            if (amount == 0)
+                throw new ManagedException(Messages.WRONG_AMOUNT);
 
-            return await _CreditCardRepo.PayAsync(cardNumber, amount);
+            var balance = await GetCreditCardBalanceAsync(cardNumber);
+            balance += amount;
+            await _CreditCardRepo.UpdateBalanceAsync(cardNumber, balance);
+            return balance;
         }
     }
 }

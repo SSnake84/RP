@@ -86,10 +86,8 @@ namespace RapidPay.Controllers
         {
             try
             {
-                var ok = await _creditCardService.PayAsync(cardNumber, amount);
-                if (ok)
-                    return Ok();
-                return StatusCode(500, Messages.PAYMENT_FAILED);
+                var balance = await _creditCardService.PayAsync(cardNumber, amount);
+                return Ok(balance);
             }
             catch (ManagedException ex) { return StatusCode(500, ex.Message); }
             catch

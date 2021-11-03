@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidPay", "RapidPay\RapidP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidPay.Data", "RapidPay.Data\RapidPay.Data.csproj", "{0102AAF4-0B19-4EC3-AF5E-F066587B9965}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidPay.Tests", "RapidPay.Tests\RapidPay.Tests.csproj", "{49D63C82-0FB0-4478-BF6D-306500B7B640}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0102AAF4-0B19-4EC3-AF5E-F066587B9965}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0102AAF4-0B19-4EC3-AF5E-F066587B9965}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0102AAF4-0B19-4EC3-AF5E-F066587B9965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49D63C82-0FB0-4478-BF6D-306500B7B640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49D63C82-0FB0-4478-BF6D-306500B7B640}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49D63C82-0FB0-4478-BF6D-306500B7B640}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49D63C82-0FB0-4478-BF6D-306500B7B640}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

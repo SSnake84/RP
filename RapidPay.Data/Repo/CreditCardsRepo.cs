@@ -9,7 +9,7 @@ namespace RapidPay.Data.Repo
     {
         Task<bool> AddCreditCardAsync(CreditCard card);
         Task<decimal> GetCreditCardBalanceAsync(string cardNumber);
-        Task<bool> PayAsync(string cardNumber, decimal amount);
+        Task<bool> UpdateBalanceAsync(string cardNumber, decimal amount);
 
         Task<bool> DoesExistCreditCardAsync(string cardNumber);
     }
@@ -34,12 +34,12 @@ namespace RapidPay.Data.Repo
             }
         }
 
-        public async Task<bool> PayAsync(string cardNumber, decimal amount)
+        public async Task<bool> UpdateBalanceAsync(string cardNumber, decimal amount)
         {
             using (var context = new RapidPayContext())
             {
                 var card = await context.CreditCards.Where(c => c.CardNumber == cardNumber).SingleOrDefaultAsync();
-                card.Balance += amount;
+                card.Balance = amount;
                 await context.SaveChangesAsync();
                 return true;
             }
